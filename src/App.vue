@@ -2,14 +2,14 @@
   <div id="app">
     <div>{{curNum}}</div>
     <div class="answer" v-if="showAnswer">{{curJapanese}}</div>
-    <input type="button" value="查看答案" @click="handleClick" />
-    <input type="button" value="切换" @click="next" />
+    <Button type="primary" @click="handleClick">查看答案</Button>
+    <Button type="primary" @click="next">切换</Button>
     <div class="answer">{{inputValJapanese}}</div>
-    <input type="text" v-model="inputVal" />
+    <Input v-model="inputVal" type="number" placeholder="输入数字" style="width: 300px" />
     <Slider v-model="range" range></Slider>
     <div class>
-      <Input v-model="range[0]" placeholder="Enter something..." />
-      <Input v-model="range[1]" placeholder="Enter something..." />
+      <Input type="number" v-model="range[0]" placeholder="Enter something..." />
+      <Input type="number" v-model="range[1]" placeholder="Enter something..." />
     </div>
     <div>范围：{{range[0]}}~{{range[1]}}</div>
   </div>
