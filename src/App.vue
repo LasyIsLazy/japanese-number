@@ -1,17 +1,28 @@
 <template>
   <div id="app">
-    <div>{{curNum}}</div>
-    <div class="answer" v-if="showAnswer">{{curJapanese}}</div>
-    <Button type="primary" @click="handleClick">查看答案</Button>
-    <Button type="primary" @click="next">切换</Button>
-    <div class="answer">{{inputValJapanese}}</div>
-    <Input v-model="inputVal" type="number" placeholder="输入数字" style="width: 300px" />
     <Slider v-model="range" range></Slider>
-    <div class>
-      <Input type="number" v-model="range[0]" placeholder="Enter something..." />
-      <Input type="number" v-model="range[1]" placeholder="Enter something..." />
+    <div>
+      <span>范围：</span>
+      <Input type="number" v-model="range[0]" placeholder="输入范围" class="normal-width" />
+      <span>~</span>
+      <Input type="number" v-model="range[1]" placeholder="输入范围" class="normal-width" />
     </div>
-    <div>范围：{{range[0]}}~{{range[1]}}</div>
+    <div>
+      <span>当前数字：</span>
+      <Input
+        v-model="curNum"
+        :number="true"
+        type="number"
+        placeholder="输入数字"
+        class="normal-width"
+        @input="handleCurNumInput"
+        @on-enter="showAnswer"
+      />
+    </div>
+    <Button type="primary" @click="showAnswer">查看答案</Button>
+    <Button type="primary" @click="next">切换</Button>
+    <div>{{curNumStr}}</div>
+    <div class="answer" :style="{visibility: isAnswerVisible? 'visible' : 'hidden'}">{{curJapanese}}</div>
   </div>
 </template>
 
@@ -111,34 +122,39 @@ function getJapnese(num: number) {
 export default class App extends Vue {
   private curNum = Math.floor(Math.random() * 10)
 
-  private inputVal = ''
   private range = [1, 10]
 
-  private showAnswer = false
+  private isAnswerVisible = false
+
+  private get curNumStr() {
+    return this.curNum.toLocaleString()
+  }
 
   private get curJapanese() {
     return getJapnese(this.curNum)
   }
 
-  private get inputValJapanese() {
-    return getJapnese(parseInt(this.inputVal, 10))
-  }
-
-  private handleClick() {
-    this.showAnswer = true
+  private showAnswer() {
+    this.isAnswerVisible = true
   }
 
   private next() {
-    this.showAnswer = false
+    this.isAnswerVisible = false
     this.curNum = Math.floor(
       Math.random() * (this.range[1] - this.range[0]) + this.range[0]
     )
+  }
+
+  private handleCurNumInput() {
+    this.isAnswerVisible = false
   }
 }
 </script>
 
 <style>
 #app {
+  width: 100%;
+  padding: 0 40px;
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -148,5 +164,8 @@ export default class App extends Vue {
 }
 .answer {
   font-size: 40px;
+}
+#app .normal-width {
+  width: 100px;
 }
 </style>
