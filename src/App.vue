@@ -112,7 +112,7 @@ export default class App extends Vue {
   private curNum = Math.floor(Math.random() * 10)
 
   private inputVal = ''
-  private range = [1, 100]
+  private range = [1, 10]
 
   private showAnswer = false
 
