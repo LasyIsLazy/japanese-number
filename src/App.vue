@@ -1,11 +1,17 @@
 <template>
   <div id="app">
     <div>{{curNum}}</div>
-    <div v-if="showAnswer">{{curJapanese}}</div>
+    <div class="answer" v-if="showAnswer">{{curJapanese}}</div>
     <input type="button" value="查看答案" @click="handleClick" />
     <input type="button" value="切换" @click="next" />
-    <div>{{inputValJapanese}}</div>
+    <div class="answer">{{inputValJapanese}}</div>
     <input type="text" v-model="inputVal" />
+    <Slider v-model="range" range></Slider>
+    <div class>
+      <Input v-model="range[0]" placeholder="Enter something..." />
+      <Input v-model="range[1]" placeholder="Enter something..." />
+    </div>
+    <div>范围：{{range[0]}}~{{range[1]}}</div>
   </div>
 </template>
 
@@ -106,6 +112,7 @@ export default class App extends Vue {
   private curNum = Math.floor(Math.random() * 10)
 
   private inputVal = ''
+  private range = [1, 100]
 
   private showAnswer = false
 
@@ -123,7 +130,9 @@ export default class App extends Vue {
 
   private next() {
     this.showAnswer = false
-    this.curNum = Math.floor(Math.random() * 1000)
+    this.curNum = Math.floor(
+      Math.random() * (this.range[1] - this.range[0]) + this.range[0]
+    )
   }
 }
 </script>
@@ -136,5 +145,8 @@ export default class App extends Vue {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+}
+.answer {
+  font-size: 40px;
 }
 </style>
