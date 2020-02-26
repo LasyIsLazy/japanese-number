@@ -1,13 +1,13 @@
 <template>
   <div id="app">
-    <Slider v-model="range" range></Slider>
-    <div>
+    <Slider v-model="range" range class="row"></Slider>
+    <div class="row">
       <span>范围：</span>
       <Input type="number" v-model="range[0]" placeholder="输入范围" class="normal-width" />
       <span>~</span>
       <Input type="number" v-model="range[1]" placeholder="输入范围" class="normal-width" />
     </div>
-    <div>
+    <div class="row">
       <span>当前数字：</span>
       <Input
         v-model="curNum"
@@ -19,10 +19,19 @@
         @on-enter="showAnswer"
       />
     </div>
-    <Button type="primary" @click="showAnswer">查看答案</Button>
-    <Button type="primary" @click="next">切换</Button>
-    <div>{{curNumStr}}</div>
-    <div class="answer" :style="{visibility: isAnswerVisible? 'visible' : 'hidden'}">{{curJapanese}}</div>
+    <div class="row">
+      <Button type="primary" @click="next" icon="md-checkmark">下一个</Button>
+      <Button type="primary" @click="showAnswer" icon="md-book">查看答案</Button>
+    </div>
+    <div class="row">
+      <div class="num">{{curNumStr}}</div>
+    </div>
+    <div class="row">
+      <div
+        class="answer"
+        :style="{visibility: isAnswerVisible? 'visible' : 'hidden'}"
+      >{{curJapanese}}</div>
+    </div>
   </div>
 </template>
 
@@ -162,10 +171,22 @@ export default class App extends Vue {
   color: #2c3e50;
   margin-top: 60px;
 }
-.answer {
+.num {
+  border: 1px dashed;
   font-size: 40px;
 }
+.answer {
+  border: 1px dashed;
+  font-size: 40px;
+}
+.row {
+  margin: 20px 0;
+}
+
 #app .normal-width {
   width: 100px;
+}
+#app .ivu-btn {
+  margin: 0 20px;
 }
 </style>
