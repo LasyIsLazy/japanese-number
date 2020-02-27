@@ -32,11 +32,18 @@
         :style="{visibility: isAnswerVisible? 'visible' : 'hidden'}"
       >{{curJapanese}}</div>
     </div>
+    <Collapse>
+      <Panel>
+        Cheetsheet
+        <Cheetsheet slot="content" />
+      </Panel>
+    </Collapse>
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
+import Cheetsheet from './components/CheetSheet.vue'
 
 enum DigitDic {
   'ぜろ' = 0,
@@ -126,7 +133,9 @@ function getJapnese(num: number) {
 }
 
 @Component({
-  components: {},
+  components: {
+    Cheetsheet,
+  },
 })
 export default class App extends Vue {
   private curNum = Math.floor(Math.random() * 10)
